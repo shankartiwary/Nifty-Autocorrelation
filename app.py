@@ -3,10 +3,14 @@ import yfinance as yf
 import pandas as pd
 from statsmodels.graphics.tsaplots import plot_acf
 import matplotlib.pyplot as plt
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 
 # Set the title of the Streamlit app
 st.title('Nifty 50 Autocorrelation Visualization')
+
+# Auto-refresh the app every 60 seconds to fetch the latest data
+st.html("<meta http-equiv='refresh' content='60'>")
+st.write(f"Last Updated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
 # --- Data Fetching ---
 # Define the ticker symbol for Nifty 50
