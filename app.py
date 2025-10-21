@@ -4,13 +4,18 @@ import pandas as pd
 from statsmodels.graphics.tsaplots import plot_acf
 import matplotlib.pyplot as plt
 from datetime import date, timedelta, datetime
+import pytz
 
 # Set the title of the Streamlit app
 st.title('Nifty 50 Autocorrelation Visualization')
 
 # Auto-refresh the app every 60 seconds to fetch the latest data
 st.html("<meta http-equiv='refresh' content='60'>")
-st.write(f"Last Updated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+
+# Get current time in IST
+ist = pytz.timezone('Asia/Kolkata')
+now_ist = datetime.now(ist)
+st.write(f"Last Updated: {now_ist.strftime('%Y-%m-%d %H:%M:%S %Z')}")
 
 # --- Data Fetching ---
 # Define the ticker symbol for Nifty 50
