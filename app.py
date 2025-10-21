@@ -37,6 +37,20 @@ try:
         # Generate the autocorrelation plot
         fig, ax = plt.subplots(figsize=(10, 5))
         plot_acf(close_prices, ax=ax, lags=9) # Lags up to 9 for 20 data points
+
+        # Make the plot more colorful by changing the confidence interval and markers
+        if ax.collections:
+            # The confidence interval is a PolyCollection
+            poly_collection = next((coll for coll in ax.collections if isinstance(coll, plt.matplotlib.collections.PolyCollection)), None)
+            if poly_collection:
+                poly_collection.set_facecolor('lightgreen')
+                poly_collection.set_edgecolor('green')
+
+            # The markers are a PathCollection
+            path_collection = next((coll for coll in ax.collections if isinstance(coll, plt.matplotlib.collections.PathCollection)), None)
+            if path_collection:
+                path_collection.set_color('red')
+
         ax.set_title('Autocorrelation Function (ACF) for Nifty 50')
         ax.set_xlabel('Lag (in days)')
         ax.set_ylabel('Autocorrelation')
