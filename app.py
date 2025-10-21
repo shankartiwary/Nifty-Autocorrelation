@@ -83,10 +83,18 @@ try:
             if path_collection:
                 path_collection.set_color('red')
 
-        ax.set_title('Autocorrelation Function (ACF) for Nifty 50')
-        ax.set_xlabel('Lag (in days)')
-        ax.set_ylabel('Autocorrelation')
-        plt.grid(True)
+        ax.set_title('Autocorrelation Function (ACF) for Nifty 50', color='red')
+        ax.set_xlabel('Lag (in days)', color='red')
+        ax.set_ylabel('Autocorrelation', color='red')
+        plt.grid(True, alpha=0.3)
+
+        # Change tick colors
+        ax.tick_params(axis='x', colors='red')
+        ax.tick_params(axis='y', colors='red')
+
+        # Change spine colors
+        for spine in ax.spines.values():
+            spine.set_edgecolor('red')
 
         # Make the plot background transparent
         fig.patch.set_alpha(0)
