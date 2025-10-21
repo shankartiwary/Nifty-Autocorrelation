@@ -88,6 +88,10 @@ try:
         ax.set_ylabel('Autocorrelation')
         plt.grid(True)
 
+        # Make the plot background transparent
+        fig.patch.set_alpha(0)
+        ax.patch.set_alpha(0)
+
         # Display the plot in the Streamlit app
         st.pyplot(fig)
 
