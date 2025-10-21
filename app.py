@@ -17,7 +17,30 @@ ist = pytz.timezone('Asia/Kolkata')
 now_ist = datetime.now(ist)
 st.write(f"Last Updated: {now_ist.strftime('%Y-%m-%d %H:%M:%S %Z')}")
 
-# --- Data Fetching ---
+# --- Real-time Price Display ---
+st.header('Latest Market Price')
+try:
+    nifty_ticker = yf.Ticker('^NSEI')
+    ticker_info = nifty_ticker.info
+    latest_price = ticker_info.get('regularMarketPrice')
+    market_time_unix = ticker_info.get('regularMarketTime')
+
+    if latest_price and market_time_unix:
+        # Convert Unix timestamp to IST datetime
+        market_time_utc = datetime.fromtimestamp(market_time_unix, tz=pytz.utc)
+        market_time_ist = market_time_utc.astimezone(ist)
+
+        st.metric(
+            label=f"Nifty 50 as of {market_time_ist.strftime('%H:%M:%S %Z')}",
+            value=f"{latest_price:,.2f}"
+        )
+    else:
+        st.info("Real-time price data is not currently available.")
+except Exception as e:
+    st.warning(f"Could not fetch the latest price data: {e}")
+
+
+# --- Historical Data for Autocorrelation ---
 # Define the ticker symbol for Nifty 50
 ticker = '^NSEI'
 
