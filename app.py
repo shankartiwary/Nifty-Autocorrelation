@@ -44,13 +44,10 @@ except Exception as e:
 # Define the ticker symbol for Nifty 50
 ticker = '^NSEI'
 
-# Calculate the start date (fetch more than 20 days to account for non-trading days)
-end_date = date.today()
-start_date = end_date - timedelta(days=40) # Fetching 40 days of data to ensure we get at least 20 trading days
-
+# Fetch the last 2 months of data to ensure we have the latest trading day
 try:
-    # Download the Nifty 50 data
-    nifty_data = yf.download(ticker, start=start_date, end=end_date)
+    # Download the Nifty 50 data using a period is more reliable for recent data
+    nifty_data = yf.download(ticker, period="2mo")
 
     # Get the last 20 days of data
     nifty_data_20_days = nifty_data.tail(20)
