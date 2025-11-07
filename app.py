@@ -44,10 +44,13 @@ except Exception as e:
 # Define the ticker symbol for Nifty 50
 ticker = '^NSEI'
 
-# Fetch the last 2 months of data to ensure we have the latest trading day
+# Set end_date to tomorrow to ensure the latest trading day's data is included
+end_date = date.today() + timedelta(days=1)
+start_date = end_date - timedelta(days=40) # Fetching 40 days to ensure we get at least 20 trading days
+
 try:
-    # Download the Nifty 50 data using a period is more reliable for recent data
-    nifty_data = yf.download(ticker, period="2mo")
+    # Download the Nifty 50 data, setting end date to tomorrow is a robust way to get today's data
+    nifty_data = yf.download(ticker, start=start_date, end=end_date, auto_adjust=True)
 
     # Get the last 20 days of data
     nifty_data_20_days = nifty_data.tail(20)
